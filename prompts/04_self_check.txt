@@ -1,0 +1,4 @@
+Self-check:
+- Recompute one leaderboard using a different method to confirm.
+- List any assumptions (e.g., missing GP or SH) and how they affect results.
+- If any math conflicts, state the correction and the corrected answer.

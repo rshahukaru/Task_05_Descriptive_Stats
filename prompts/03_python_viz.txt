@@ -1,0 +1,6 @@
+If you can execute Python, write code to:
+- Load the pasted CSV as a DataFrame named df.
+- Create pts_pg if possible (requires GP and PTS).
+- Plot: (1) histogram of pts_pg; (2) scatter of SH vs G with a fitted line and printed correlation.
+- Print the top-5 players by pts_pg and shot_pct.
+Ensure the code runs end-to-end with no external files.

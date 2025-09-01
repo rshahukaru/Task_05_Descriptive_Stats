@@ -1,0 +1,6 @@
+Using ONLY the provided stats and your computed metrics, answer:
+“As a coach, to win two more games next season, should we focus on offense or defense? Name ONE player to develop as a game-changer and why.”
+Constraints:
+- Tie your rationale to 2–3 concrete stats/rates from the table.
+- Call out one specific weakness to fix (e.g., shot selection, turnovers) with a measurable goal.
+- Keep it under 120 words.

@@ -1,0 +1,90 @@
+00_base_describe.txt
+
+Answer: 
+
+Got it, Munna — I’ll do this by the book: only your CSV, show all working, and call out any gaps. I ran Python (code shown above) to compute everything.
+
+---
+
+# 1) Preview (first 6 rows — exact columns detected)
+
+|  # | Player          | gp - gs |  g |  A | pts |  sh |   sh% | sog |  sog% | gwg | FPG | FPS | GB | to | ct | dc | fouls | RC-YC-GC |
+| -: | :-------------- | :------ | -: | -: | --: | --: | ----: | --: | ----: | --: | --: | --: | -: | -: | -: | -: | ----: | :------- |
+| 24 | Tyrrell, Emma   | 22-22   | 70 | 22 |  92 | 135 | 0.519 | 102 | 0.756 |   4 |  12 |  26 | 21 | 29 |  7 |  6 |     7 | 0-0-3    |
+|  1 | Adamson, Olivia | 22-22   | 58 | 25 |  83 | 109 | 0.532 |  77 | 0.706 |   1 |  14 |  22 | 12 | 29 |  7 |  6 |     9 | 0-0-5    |
+| 44 | Ward, Emma      | 22-22   | 44 | 37 |  81 |  90 | 0.489 |  69 | 0.767 |   2 |   5 |  12 | 10 | 32 |  3 |  0 |     5 | 0-0-2    |
+| 15 | Smith, Natalie  | 21-21   | 44 | 10 |  54 |  91 | 0.484 |  68 | 0.747 |   3 |  14 |  27 | 11 | 24 |  8 | 36 |    26 | 0-6-4    |
+|  6 | Rowley, Payton  | 19-0    | 23 | 15 |  38 |  55 | 0.418 |  42 | 0.764 |   2 |   5 |   9 |  5 | 15 |  1 |  0 |     0 | 0-0-2    |
+| 49 | Baxter, Maddy   | 22-22   | 30 |  6 |  36 |  64 | 0.469 |  44 | 0.688 |   0 |   6 |  12 | 14 | 20 | 12 | 14 |    26 | 0-5-7    |
+
+---
+
+# 2) Descriptives
+
+I mapped **G→`g`**, **A→`A`**, **PTS→`pts`** from your file. I extracted **GP** from `"gp - gs"` and computed \*\_pg rates when possible. Shot percentage is **G/SH** (not using the provided `sh%`).
+
+## 2a) Summary stats (G, A, PTS)
+
+|     |   mean | median |    std |
+| :-- | -----: | -----: | -----: |
+| G   | 24.528 |  0.000 | 65.576 |
+| A   | 11.333 |  0.500 | 30.547 |
+| PTS | 35.861 |  1.000 | 95.881 |
+
+## 2b) Derived columns (first 6 rows)
+
+| Player          |   GP |   GS | g\_pg | A\_pg | pts\_pg | shot\_pct |
+| :-------------- | ---: | ---: | ----: | ----: | ------: | --------: |
+| Tyrrell, Emma   | 22.0 | 22.0 | 3.182 | 1.000 |   4.182 |     0.519 |
+| Adamson, Olivia | 22.0 | 22.0 | 2.636 | 1.136 |   3.773 |     0.532 |
+| Ward, Emma      | 22.0 | 22.0 | 2.000 | 1.682 |   3.682 |     0.489 |
+| Smith, Natalie  | 21.0 | 21.0 | 2.095 | 0.476 |   2.571 |     0.484 |
+| Rowley, Payton  | 19.0 |  0.0 | 1.211 | 0.789 |   2.000 |     0.418 |
+| Baxter, Maddy   | 22.0 | 22.0 | 1.364 | 0.273 |   1.636 |     0.469 |
+
+*(No missing columns for these steps.)*
+
+---
+
+# 3) Leaderboards (GP ≥ 8 applied)
+
+## 3a) Top-5 by **pts\_pg**
+
+| Player          |   GP | pts | pts\_pg |
+| :-------------- | ---: | --: | ------: |
+| Tyrrell, Emma   | 22.0 |  92 |   4.182 |
+| Adamson, Olivia | 22.0 |  83 |   3.773 |
+| Ward, Emma      | 22.0 |  81 |   3.682 |
+| Smith, Natalie  | 21.0 |  54 |   2.571 |
+| Rowley, Payton  | 19.0 |  38 |   2.000 |
+
+## 3b) Top-5 by **shot\_pct = G/SH**
+
+| Player          |   GP |  g |  sh | shot\_pct |
+| :-------------- | ---: | -: | --: | --------: |
+| Clark, Superia  |  9.0 |  1 |   1 |     1.000 |
+| Rode, Meghan    |  9.0 |  8 |  11 |     0.727 |
+| Adamson, Olivia | 22.0 | 58 | 109 |     0.532 |
+| Tyrrell, Emma   | 22.0 | 70 | 135 |     0.519 |
+| Ward, Emma      | 22.0 | 44 |  90 |     0.489 |
+
+---
+
+# 4) Visuals (code executed; charts shown above)
+
+* **Histogram:** `pts_pg` with **10 bins** (x-axis: points per game; y-axis: count).
+data/Histogram.png
+
+* **Scatter:** `SH` (x) vs `G` (y) with least-squares best-fit line.
+data/Scatter.png
+
+  * Best-fit line: **y = 0.44081·x + 0.24650**
+  * Pearson correlation **r = 0.99482**
+
+---
+
+### Notes on working
+
+* Parsed `GP`/`GS` from the `"gp - gs"` string.
+* Per-game rates and `shot_pct` computed row-wise; division by zero yields `NaN` (none affected in top rows).
+* All computations and plots were performed from your CSV only; no external data used.

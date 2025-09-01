@@ -1,0 +1,12 @@
+You are given Syracuse Women’s Lacrosse season stats (CSV pasted below).
+Rules:
+- Use ONLY the provided data; no outside info.
+- Show your working and intermediate tables.
+- If a needed column is missing, say so and skip that step.
+
+Tasks:
+1) Preview: show a 6-row table with the exact columns you detect.
+2) Descriptives: mean/median/std for G, A, PTS. If present, compute per-game rates (*_pg) and shot_pct = G/SH.
+3) Leaderboards: top-5 by pts_pg and by shot_pct (require GP ≥ 8 if GP exists).
+4) Visuals: histogram of pts_pg and scatter of SH vs G with a best-fit line; if you can run Python, do so and show code; otherwise describe the exact bins/axes and computed correlation.
+Return: numbered sections with markdown tables.
